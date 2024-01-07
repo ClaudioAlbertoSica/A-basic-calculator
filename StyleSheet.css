@@ -1,0 +1,36 @@
+#DivCalc {
+    display: flex;
+    justify-content: center;
+}
+
+#TablaCalc {
+    background-color: rgb(50,60,70);
+    border: 3px ridge black;
+    border-radius: 15px;
+}
+
+.CalcRows {
+    height: 50px;   
+}
+
+.Displays{
+    background-color: rgb(80,90,100);
+}
+
+td {
+    width: 50px;
+    border-radius: 25px;
+    text-align: -webkit-center;
+    background-color: rgb(100,115,125);
+    padding: 0px;
+}
+
+button{
+    border-radius: 22px;
+    display: flex;
+    width: 45px;
+    height: 45px;
+    align-items: center;
+    justify-content: center;
+    border-width: 5px;
+}
