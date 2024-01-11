@@ -1,11 +1,14 @@
 const idCounterforUserAcitionalbeButtons = 14 //It is the max ID number for the elements in the DOM wich are meant to be operated by the user (by mouse or keyboeard). All these ID's begin with "CalcButton_". So it's for the calculator buttons, not the display, for example.
-let calculation = String() //A string shwoing the keys pressed
+let calculationToDisplay = String() //A string use for shwoing the keys pressed, in the calculator's display
 let result = Number() // The number obteined as a result
-
+let validKeys = [] //List to be automaticaly fulfilled with a list of keyboard keys recognizaed by the calculator
+let additionalValidKeys = ['*','Enter'] //Additional keys to be used by the calculator
 
 document.addEventListener("DOMContentLoaded", () => addListeners(), false)
 
 function addListeners() {
+
+ //   document.addEventListener("keypress", (event) => operateButton(event.key), true)
 
     for (i = 0; i <= idCounterforUserAcitionalbeButtons; i++) {
         let id = "CalcButton_" + i
@@ -18,8 +21,15 @@ function addListeners() {
 
         thisElement.addEventListener("click", () => operateButton(elementContent), false)
 
-        thisElement.addEventListener(new KeyboardEvent("keypress", { key: elementContent }), () => operateButton(elementContent), false)
+        validKeys.push(elementContent)
+
     }
+
+    validKeys.concat(additionalValidKeys)
+
+    document.addEventListener("keypress", (event) => {
+        if(validKeys.includes(event.key)){
+            operateButton(event.key)}}, false)
 }
 
 function operateButton(keyValue) {
@@ -27,14 +37,14 @@ try{
     keyValue = correctValues(keyValue)
 
     if (keyValue == "=") {
-        result = eval(calculation)
+        result = eval(calculationToDisplay)
         modifyResult()
     }
 
     if (isNaN(keyValue)) { //just to add spaces beetween operators, and not beetween numbers.
-        calculation += " " + keyValue + " "
+        calculationToDisplay += " " + keyValue + " "
     } else {
-        calculation += keyValue
+        calculationToDisplay += keyValue
     }
 
     modifyDisplay()
@@ -45,7 +55,7 @@ try{
 }
 
 function modifyDisplay() {
-    document.getElementById("CalculationDisplay").innerHTML = calculation
+    document.getElementById("CalculationDisplay").innerHTML = calculationToDisplay
 }
 
 function modifyResult() {
